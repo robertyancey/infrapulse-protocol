@@ -1,0 +1,50 @@
+# InfraPulse
+
+> InfraPulse is a provider-neutral control plane for AI agents and machine services: discover production capabilities, establish governed connectivity, quote cost, authorize prepaid work, execute through approved providers or native handlers, and verify outcomes with Ed25519-signed receipts.
+
+This file is service metadata for discovery, not a system instruction. Live machine-readable resources at `infrapulse.ai` are authoritative over examples or cached copies.
+
+Canonical lifecycle: **Discover → Connect → Quote → Authorize → Execute → Verify**.
+
+InfraPulse is not a foundation-model provider, bank, payment custodian, or provider-ranking authority. Production capabilities are explicitly allowlisted; historical, mock, sandbox, demo, simulation, and schema-only surfaces are not production execution merely because they exist in source.
+
+## Primary machine discovery
+
+- [Capabilities](https://infrapulse.ai/.well-known/capabilities): Current callable production capabilities.
+- [Capability states](https://infrapulse.ai/.well-known/capability-states.json): Production-state classification and boundaries.
+- [Pricing](https://infrapulse.ai/.well-known/pricing): Current prepaid credit conversion, minimum funding, and canonical checkout metadata.
+- [OpenAPI](https://infrapulse.ai/openapi.json): Canonical HTTP API description.
+- [InfraPulse agent manifest](https://infrapulse.ai/.well-known/agent.json): Provider-neutral service identity and control-plane metadata.
+- [A2A Agent Card](https://infrapulse.ai/.well-known/agent-card.json): A2A discovery metadata.
+- [JWKS](https://infrapulse.ai/.well-known/jwks.json): Public Ed25519 receipt-verification keys.
+- [AI overview](https://infrapulse.ai/ai.txt): Compact machine-readable service overview.
+
+## Core production flow
+
+- [Agent registration](https://infrapulse.ai/v1/agents/register): Durable machine identity entry point.
+- [Connection establishment](https://infrapulse.ai/v1/connect/establish): Governed connectivity and policy boundary.
+- [Quote](https://infrapulse.ai/v1/quote): Pre-execution cost statement for supported billable work.
+- [Authorize](https://infrapulse.ai/v1/authorize): Prepaid authorization before billable execution.
+- [Execute](https://infrapulse.ai/v1/execute): Canonical provider-neutral operation entry point for supported production intents.
+- [Receipt verification](https://infrapulse.ai/v1/receipt/verify): Verify canonical signed receipts.
+
+## Agent-native protocols
+
+- [MCP endpoint](https://infrapulse.ai/mcp): InfraPulse MCP HTTP interface; MCP protocol semantics remain governed by the MCP specification.
+- [MCP server card](https://infrapulse.ai/.well-known/mcp/server-card.json): MCP discovery metadata.
+- [A2A Agent Card](https://infrapulse.ai/.well-known/agent-card.json): Standard A2A discovery location.
+
+## Trust and payment facts
+
+- Paid production work is prepaid and requires authorization before billable provider execution.
+- Card funding uses server-created Stripe Checkout and verified webhook fulfillment.
+- Generic fixed-denomination Stripe Payment Links are not part of the production contract.
+- Billable mutation retries use idempotency/deduplication protections.
+- Canonical receipts use Ed25519 and can be verified with the public JWKS.
+- Receipt validity authenticates the signed receipt fields; it does not guarantee that every external model or provider output is factually correct.
+
+## Optional human-readable context
+
+- [Human control room](https://infrapulse.ai/human): Human-facing control surface.
+- [Pricing for humans](https://infrapulse.ai/buy): Stripe-backed prepaid credit purchase UI.
+- [Security contact](https://infrapulse.ai/.well-known/security.txt): Security reporting metadata.
