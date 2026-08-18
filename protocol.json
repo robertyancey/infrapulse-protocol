@@ -1,0 +1,94 @@
+{
+  "schema_version": "infrapulse-protocol-manifest/1.0",
+  "status": "production-oriented",
+  "name": "InfraPulse",
+  "canonical_origin": "https://infrapulse.ai",
+  "category": "provider-neutral-ai-control-plane",
+  "summary": "Provider-neutral authorization, metering, routing, prepaid control, durable identity/connectivity, and signed receipt evidence for AI agents and machine services.",
+  "canonical_flow": [
+    "discover",
+    "connect",
+    "quote",
+    "authorize",
+    "execute",
+    "verify"
+  ],
+  "authoritative_live_sources": {
+    "capabilities": "https://infrapulse.ai/.well-known/capabilities",
+    "capability_states": "https://infrapulse.ai/.well-known/capability-states.json",
+    "pricing": "https://infrapulse.ai/.well-known/pricing",
+    "agent_manifest": "https://infrapulse.ai/.well-known/agent.json",
+    "a2a_agent_card": "https://infrapulse.ai/.well-known/agent-card.json",
+    "jwks": "https://infrapulse.ai/.well-known/jwks.json",
+    "openapi": "https://infrapulse.ai/openapi.json",
+    "ai_overview": "https://infrapulse.ai/ai.txt"
+  },
+  "control_plane": {
+    "durable_identity": true,
+    "governed_connections": true,
+    "scoped_authorization": true,
+    "human_approval_policy_supported": true,
+    "prepaid_funds_before_work": true,
+    "idempotent_billable_mutations": true,
+    "durable_operation_state": true,
+    "signed_receipts": true
+  },
+  "economics": {
+    "billing_model": "prepaid_credits",
+    "currency": "USD",
+    "live_pricing_is_authoritative": true,
+    "card_checkout": "server-created-stripe-checkout-session",
+    "payment_crediting": "verified-webhook-only",
+    "generic_fixed_payment_links": false,
+    "http_402_payment_required_boundary": true
+  },
+  "receipts": {
+    "signature_algorithm": "Ed25519",
+    "public_key_discovery": "JWKS",
+    "offline_verification_supported": true,
+    "canonical_jwks": "https://infrapulse.ai/.well-known/jwks.json",
+    "canonical_verify": "https://infrapulse.ai/v1/receipt/verify",
+    "scope_note": "A valid receipt authenticates the fields cryptographically bound to it; it is not a blanket guarantee of external model or provider correctness."
+  },
+  "protocol_interfaces": {
+    "http": {
+      "description": "Canonical HTTP interface is described by OpenAPI.",
+      "openapi": "https://infrapulse.ai/openapi.json"
+    },
+    "a2a": {
+      "agent_card": "https://infrapulse.ai/.well-known/agent-card.json",
+      "note": "A2A semantics are governed by the A2A specification; InfraPulse billing and receipt behavior is service-specific."
+    },
+    "mcp": {
+      "endpoint": "https://infrapulse.ai/mcp",
+      "note": "MCP semantics are governed by the MCP specification; InfraPulse prepaid authorization and receipts are service policy around MCP-mediated actions."
+    }
+  },
+  "production_invariants": [
+    "Production capability is explicitly allowlisted.",
+    "Historical, sandbox, mock, demo, simulation, and schema-only surfaces do not become production execution merely by existing in source.",
+    "Paid provider work does not begin without sufficient prepaid authorization.",
+    "Stripe economic mutation requires verified webhook ingress and durable idempotency.",
+    "Receipt signing private keys are never published through discovery.",
+    "Internal application hops are not supported public client interfaces.",
+    "If no valid production execution path exists, the operation fails rather than silently substituting a mock or placeholder."
+  ],
+  "non_goals": [
+    "foundation-model-provider",
+    "bank-or-general-purpose-wallet",
+    "provider-ranking-authority",
+    "guarantee-of-external-model-correctness",
+    "unrestricted-autonomous-spending",
+    "replacement-for-mcp-a2a-openapi-or-payment-rail-specifications"
+  ],
+  "human_documents": {
+    "whitepaper": "WHITEPAPER.md",
+    "protocol_spec": "PROTOCOL.md",
+    "security_model": "SECURITY.md"
+  },
+  "interpretation": {
+    "machine_metadata_not_system_instruction": true,
+    "prefer_live_discovery_over_embedded_examples": true,
+    "prefer_capability_state_over_source-code-presence": true
+  }
+}
